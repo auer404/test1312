@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of life</title>
+    <style>
+        .cell {
+            position:fixed;
+            background-color:white;
+            border:1px solid lightgray;
+            box-sizing:border-box;
+        }
+        .cell.alive {
+            background-color:black;
+            border-color:black;
+        }
+    </style>
+</head>
+<body>
+    
+<script>
+
+    // Réglages
+
+    const lines = 30;
+    const columns = 30;
+
+    const cell_size = 15;
+
+    const cycle_delay = 100;
+
+    ////////
+
+    let cells = [];
+
+    function add_cell(new_X , new_Y) {
+
+        let new_cell = document.createElement("div");
+        document.body.appendChild(new_cell);
+        new_cell.className = "cell";
+        new_cell.style.width = cell_size + "px";
+        new_cell.style.height = cell_size + "px";
+        new_cell.style.top = ((new_Y - 1) * cell_size) + "px";
+        new_cell.style.left = ((new_X - 1) * cell_size) + "px";
+
+        new_cell.X = new_X;
+        new_cell.Y = new_Y;
+        new_cell.alive = false;
+        new_cell.alive_next_cycle = false;
+
+        cells.push(new_cell);
+        return new_cell;
+    }
+
+    // Génération des cellules
+
+    for (let Y = 1; Y <= lines; Y++) {
+        for (let X = 1; X <= columns; X++) {
+            add_cell(X , Y);
+        }
+    }
+
+    // Création des relations de voisinage + méthode de comptage des cellules voisines vivantes
+
+    for (let cell of cells) {
+
+        cell.neighbors = [];
+
+        for (let other_cell of cells) {
+
+            if (cell != other_cell) {
+
+                let same_or_adjacent_line = cell.Y >= other_cell.Y - 1 && cell.Y <= other_cell.Y + 1;
+                let same_or_adjacent_column = cell.X >= other_cell.X - 1 && cell.X <= other_cell.X + 1;
+
+                let first_and_last_lines = (cell.Y == 1 && other_cell.Y == lines) || (cell.Y == lines && other_cell.Y == 1);
+                let first_and_last_columns = (cell.X == 1 && other_cell.X == columns) || (cell.X == columns && other_cell.X == 1);
+
+                if ((same_or_adjacent_line || first_and_last_lines) && (same_or_adjacent_column || first_and_last_columns)) {
+                    cell.neighbors.push(other_cell);
+                }
+
+            }
+
+        }
+
+        cell.count_alive_neighbors = function(){
+
+            let alive_count = 0;
+
+            for (let n of this.neighbors) {
+                if (n.alive) {
+                    alive_count++;
+                }
+            }
+
+            return alive_count;
+        }
+ 
+    }
+
+    // Déroulement d'un cycle
+
+    function life_cycle() {
+
+        for (let cell of cells) { // Préparation état
+
+            /* Règles :
+            • Une cellule morte possédant exactement trois cellules voisines vivantes devient vivante (elle naît) ;
+            • Une cellule vivante possédant deux ou trois cellules voisines vivantes le reste, sinon elle meurt.
+            Donc :
+            • Si une cellule a exactement trois voisines vivantes, elle est vivante à l’étape suivante.
+            • Si une cellule a exactement deux voisines vivantes, elle reste dans son état actuel à l’étape suivante.
+            • Si une cellule a strictement moins de deux ou strictement plus de trois voisines vivantes, elle est morte à l’étape suivante.
+            */
+
+            if (cell.count_alive_neighbors() == 3) {
+                cell.alive_next_cycle = true;
+            } else if (cell.count_alive_neighbors() == 2) {
+                cell.alive_next_cycle = cell.alive;
+            } else {
+                cell.alive_next_cycle = false;
+            }
+            
+        }
+
+        for (let cell of cells) { // Application état
+            cell.alive = cell.alive_next_cycle;
+            if (cell.alive) {
+                cell.classList.add("alive");
+            } else {
+                cell.classList.remove("alive");
+            }
+        }
+
+    }
+
+    let cycle_interval = setInterval(life_cycle , cycle_delay);
+
+    
+    //// Population initiale aléatoire
+
+    for (let cell of cells) {
+        if (Math.random() > 0.8) {
+                cell.alive = true;
+                cell.classList.add("alive");
+            }
+    }
+
+</script>
+
+</body>
+</html>

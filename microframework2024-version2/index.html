@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microframework CSS : Démo</title>
+    <!-- <link href="https://auer404.github.io/microframework2024/microframework.css" rel="stylesheet"> -->
+    <link href="microframework.css" rel="stylesheet">
+    <link href="demo.css" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Microframework CSS</h1>
+
+    <p>Ceci est un framework CSS très simple, couvrant certains besoins basiques pour des mises en page HTML. Il propose un ensemble de classes CSS prêtes à être utilisées et permet d'obtenir très rapidement un agencement élégant !</p>
+
+    <h2>Mise en place</h2>
+
+    <p>Il suffit de copier la balise suivante dans l'en-tête de la page HTML où vous voulez utiliser Microframework : </p>
+
+    <p><code>&lt;link href="https://auer404.github.io/microframework2024/microframework.css" rel="stylesheet"></code></p>
+
+    <p>Vous aurez alors accès aux fonctionnalités détaillées ci-dessous :</p>
+
+    <h2>Un système de lignes et de colonnes</h2>
+
+    <p>Pour mettre en forme une page HTML, la première chose à faire est de déterminer, dans les grandes lignes, comment l'espace s'y subdivise, verticalement et horizontalement. Microframework propose un système permettant de définir des subdivisions de la page dans la hauteur, qui pourront ensuite être elles-mêmes subdivisées dans le sens horizontal.</p>
+
+    <p>Ce système fonctionne avec deux classes : <code>ligne</code> et <code>colonne</code>. Une colonne doit se trouver dans une ligne ; une ligne peut contenir plusieurs colonnes. Les différentes colonnes contenues dans une ligne occuperont équitablement l'espace disponible en largeur.</p>
+
+    <h2>Design responsive et prise en compte des petits écrans</h2>
+
+    <p>En-dessous d'une largeur de 600 pixels pour la page, les colonnes se placeront toutes l'une sous l'autre (et vous n'avez rien à faire de spécial pour cela).</p>
+
+    <h3>Exemple :</h3>
+
+    <div class="ligne">
+        <div class="colonne">.colonne</div>
+    </div>
+
+    <div class="ligne">
+        <div class="colonne">.colonne</div>
+        <div class="colonne">.colonne</div>
+    </div>
+
+    <div class="ligne">
+        <div class="colonne">.colonne</div>
+        <div class="colonne">.colonne</div>
+        <div class="colonne">.colonne</div>
+    </div>
+    
+    <p><pre><code class="bigblock">&lt;div class="ligne">
+    &lt;div class="colonne">.colonne&lt;/div>
+&lt;/div>
+    
+&lt;div class="ligne">
+    &lt;div class="colonne">.colonne&lt;/div>
+    &lt;div class="colonne">.colonne&lt;/div>
+&lt;/div>
+    
+&lt;div class="ligne">
+    &lt;div class="colonne">.colonne&lt;/div>
+    &lt;div class="colonne">.colonne&lt;/div>
+    &lt;div class="colonne">.colonne&lt;/div>
+&lt;/div></code></pre></p>
+
+    <h2>Prise en compte des écrans larges</h2>
+
+    <p>Il est possible d'établir un comportement spécifique de certaines sections au-dessus d'une largeur de 1200 pixels pour la page, en utilisant la classe <code>conteneur1200</code>. En englobant un ensemble d'éléments (par exemples des lignes et colonnes) dans ce type de conteneur, celui-ci sera contraint à une largeur de 1200 pixels maximum, et restera centré horizontalement sur la page.</p>
+
+    <h3>Exemple :</h3>
+
+    <div class="conteneur1200">
+        <p>Ceci est un conteneur1200</p>
+        <div class="ligne">
+            <div class="colonne">.colonne</div>
+            <div class="colonne">.colonne</div>
+        </div>
+    </div>
+
+    <p><pre><code class="bigblock">&lt;div class="conteneur1200">
+    &lt;p>Ceci est un conteneur1200&lt;/p>    
+    &lt;div class="ligne">
+        &lt;div class="colonne">.colonne&lt;/div>
+        &lt;div class="colonne">.colonne&lt;/div>
+    &lt;/div>
+&lt;div></code></pre></p>
+    
+</body>
+</html>

@@ -1,0 +1,27 @@
+/***** Bases structurelles ******/
+
+.conteneur1200 {
+    max-width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.ligne {
+    display:flex;
+}
+
+.colonne {
+    flex-basis:100%;
+}
+
+/***** Responsive *****/
+
+@media (max-width:600px) {
+
+    .ligne {
+        flex-direction:column;
+    }
+    
+}
+
+
